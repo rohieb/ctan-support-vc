@@ -1,0 +1,46 @@
+Name: The vc bundle
+Version: v0.5
+Author: Stephan Hennig
+E-Mail: stephanhennig@arcor.de
+Last modified: 2008-04-21
+License: Public Domain
+
+
+The vc bundle
+-----------------------------------
+This is a script based approach to version control for TeX
+documents.  It works more reliably than keyword substitution
+based approaches, since it tracks all files in a working
+copy, not only .tex files.
+
+The vc bundle works with LaTeX and plain TeX.  Currently,
+Bazaar, Git and Subversion are supported.
+
+
+What's special about the vc bundle?
+-----------------------------------
+* Common version control packages for LaTeX use keyword
+  substitution to access revision information.  That
+  approach doesn't work reliably in the presence of
+  non-.tex files, e.g., graphics or graphic sources that
+  are processed by an external tool.
+* The author is unaware of any alternative version control
+  packages for plain TeX.
+* The author is unaware of any alternative LaTeX version
+  control packages that support Bazaar or Git.
+
+
+Getting the software
+-----------------------------------
+The latest version of the vc bundle can be found at
+CTAN:support/vc.
+
+<URL:http://www.ctan.org/get/support/vc.zip>
+
+
+Installation and Usage
+-----------------------------------
+Please see the manual vc-manual.pdf.
+
+Happy TeXing!
+Stephan Hennig

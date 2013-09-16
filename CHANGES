@@ -1,0 +1,65 @@
+v0.5 (2008-04-21)
+----------------------
+Incompatible changes:
+* Don't write sensitive information to vc.tex, by default (see appendix A).
+  - Bazaar:
+      \BZRBranchNick
+  - Subversion:
+      \SVNPath, \SVNName, \SVNUrl, \SVNNodeKind, \SVNRepositoryRoot
+
+
+v0.42 (2008-04-17)
+----------------------
+Changes:
+* Small documentation update.
+
+
+v0.41 (2008-04-11)
+----------------------
+Changes:
+* Small documentation update.
+
+
+v0.4 (2008-04-10)
+----------------------
+Incompatible changes:
+* Search for local modifications only at request
+  (relevant to macro \VCRevisionMod, see appendix B).
+
+Changes:
+* Again improved locale handling.
+* Improved compatibility for Subversion within Msys shell.
+* Improved documentation:
+
+
+v0.3 (2008-03-20)
+----------------------
+New:
+* Added support for Bazaar.
+* The vc bundle is now Public Domain.
+
+Changes:
+* Fixed line endings in Unix scripts (solving several issues).
+* Fixed handling of variable LANG in shell scripts.
+* Improved documentation:
+  - Added some more "Questions and answers".
+
+
+v0.21 (2008-03-10)
+----------------------
+* Incompatible change:
+  - Removed macros \VCDate, \VCLongDate, \VCDateTeX.
+  - Introduced macros \VCDateRAW, \VCDateISO, \VCDateTEX.
+* Improved documentation:
+  - Added section "Questions and answers".
+
+
+v0.2 (2008-03-06)
+----------------------
+* Added documentation.
+* First upload to CTAN.
+
+
+v0.1alpha (2008-03-04)
+----------------------
+* First public announcement on comp.text.tex.
