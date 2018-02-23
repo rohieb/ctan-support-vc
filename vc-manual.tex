@@ -62,7 +62,7 @@
   documents.  It works more reliably than keyword substitution based
   approaches, since it tracks \emph{all} files in a working copy, not
   only \texttt{.tex} files.  The \pkg\ bundle works with \LaTeX\ and
-  plain \TeX.  Currently, Bazaar, Git and Subversion are supported.
+  plain \TeX.  Currently, Bazaar, Git, Mercurial and Subversion are supported.
 \end{abstract}
 \begin{multicols}{2}
 \tableofcontents
@@ -96,7 +96,7 @@ file \texttt{vc.tex}.  This file can then be included into your document
 sources.
 
 The \pkg\ bundle works with \LaTeX\ as well as plain \TeX.  Currently,
-Bazaar, Git and Subversion are supported.  Additional contributions are
+Bazaar, Git, Mercurial and Subversion are supported.  Additional contributions are
 welcome!
 
 
@@ -138,7 +138,7 @@ vc.tex
   \end{minipage}
 \end{minipage}
 Note, depending on your VCS the AWK script might be any of
-\texttt{vc-bzr.awk}, \texttt{vc-git.awk} or \texttt{vc-svn.awk}.
+\texttt{vc-bzr.awk}, \texttt{vc-git.awk}, \texttt{vc-hg.awk} or \texttt{vc-svn.awk}.
 Additionally, while the AWK scripts have the same names on Unix and
 Windows, the \pkg\ bundle provides them with different line endings.
 So, watch out to take the right one for your VCS and~OS.
@@ -149,14 +149,14 @@ steps).
 \item Copy the two script files\newline
   \begin{tabular}{l@{\hspace{5em}}l}
     \textbullet~\texttt{vc} & (or \texttt{vc.bat} for Windows)\\
-    \textbullet~\texttt{vc-bzr.awk} & (or \texttt{vc-git.awk} or \texttt{vc-svn.awk})\\
+    \textbullet~\texttt{vc-bzr.awk} & (or \texttt{vc-git.awk} or \texttt{vc-hg.awk} or \texttt{vc-svn.awk})\\
   \end{tabular}\newline
   into the top-level directory of your project's working copy.
 
 \item \emph{(Optionally)} You can instruct your VCS software to ignore
   all three \texttt{vc} related files.  Please consult the manual of
   your VCS software about this.  Question~\ref{vcIgnoreFiles} in
-  Section~\ref{sec:qa} contains some brief instructions for Bazaar, Git
+  Section~\ref{sec:qa} contains some brief instructions for Bazaar, Git, Mercurial
   and Subversion, too.
 
 \item \emph{(Optionally)} Personally, the author is used to check-in
@@ -198,7 +198,7 @@ available are shown in table~\ref{tab:vcmacros}.
 The most prominent information is probably the revision number, that can
 be found in macro \verb+\VCRevision+.  For Bazaar and Subversion this is
 a plain number, for Git it is a 7-hexdigit hash (the truncated
-40-hexdigit SHA1 commit hash).  Another macro that might be of interest
+40-hexdigit SHA1 commit hash), for Mercurial it is a 12-hexdigit hash (truncated from 40 symbols).  Another macro that might be of interest
 is \verb+\VCRevisionMod+.  This macro is discussed in detail in
 appendix~\ref{sec:localmod}.
 
@@ -209,7 +209,7 @@ straightforward to use.
 The above mentioned macros are available for all supported systems and
 in general should be sufficient.  However, depending on the VCS software
 you are using, there might be additional meta data available.%
-\footnote{Such as the complete 40-hexdigit SHA1 commit hash for Git.}
+\footnote{Such as the complete 40-hexdigit SHA1 commit hash for Git or Mercurial.}
 Those data are stored in other macros that are discussed in
 appendix~\ref{sec:notes}.
 
@@ -275,7 +275,7 @@ Stephan Hennig
 \label{sec:notes}
 
 \emph{To be completed.}  VCS specific macros are prefixed \verb+\BZR+,
-\verb+\GIT+ or \verb+\SVN+.  Tables~\ref{tab:vcBZRmacros}
+\verb+\GIT+, \verb+\HG+ or \verb+\SVN+.  Tables~\ref{tab:vcBZRmacros}
 to~\ref{tab:vcSVNmacros} show the additional macros available, depending
 on your VCS.
 
@@ -327,6 +327,25 @@ care.
   \centering\small
   \begin{tabularx}{\textwidth}{p{12em}>{\raggedright\arraybackslash}X}
     macro & meaning\\\addlinespace \toprule\addlinespace
+    \verb+\HGHash+ & 40-hexdigit SHA1 commit hash\\
+    \verb+\HGAbrHash+ & abbreviated commit hash\\
+    \verb+\HGBranch+ & commit branch\\
+    \verb+\HGFirstParentHash+ & first parent hash\\
+    \verb+\HGSecondParentHash+ & second parent hash (\textit{All zeroes means one-parent revision}) \\
+    \verb+\HGAbrFirstParentHash+ & abbreviated first parent hash\\
+    \verb+\HGAbrSecondParentHash+ & abbreviated second parent hash \\
+    \verb+\HGAuthorName+ & author name\\
+    \verb+\HGAuthorEmail+ & author e-mail\\
+    \verb+\HGAuthorDate+ & author date\\
+  \end{tabularx}
+  \caption{Mercurial specific version control macros.}
+  \label{tab:vcHGmacros}
+\end{table}
+
+\begin{table}[p]
+  \centering\small
+  \begin{tabularx}{\textwidth}{p{12em}>{\raggedright\arraybackslash}X}
+    macro & meaning\\\addlinespace \toprule\addlinespace
     \full\verb+\SVNPath+ & path to an arbitrary file or directory, that
     is part of the last commit\\
     \full\verb+\SVNName+ & \verb+\SVNPath+'s name without path\\
@@ -344,6 +363,7 @@ care.
   \label{tab:vcSVNmacros}
 \end{table}
 
+\clearpage
 
 
 \section{Checking for local modifications}
@@ -558,7 +578,7 @@ start its definition with \verb+\unskip+, \emph{e.g.},
   steps shown below!}
 
 Here are some short instructions for ignoring file \texttt{vc.tex} in
-Bazaar, Git and Subversion:
+Bazaar, Git, Mercurial and Subversion:
 \begin{description}
 \item[Bazaar] In the directory containing the script files issue the
   following commands on the command line:
@@ -578,6 +598,17 @@ and put \texttt{.gitignore} under version control:
 \begin{listing}[style=shell]
 > git add .gitignore
 > git commit .gitignore
+\end{listing}
+
+\item[Mercurial] In the directory containing the script files create a file
+  \texttt{.hgignore} containing the line
+\begin{listing}[style=text]
+vc.tex
+\end{listing}
+and put \texttt{.hgignore} under version control:
+\begin{listing}[style=shell]
+> hg add .hgignore
+> hg commit .hgignore
 \end{listing}
 
 \item[Subversion] In the directory containing the script files issue the
@@ -643,7 +674,7 @@ The \pkg\ bundle
 \item doesn't provide per-file revision data,
 \item doesn't use keyword substitution,
 \item works with \LaTeX\ and plain \TeX,
-\item supports Bazaar, Git and Subversion,
+\item supports Bazaar, Git, Mercurial and Subversion,
 \item needs an AWK interpreter.
 \item Running the scripts might become noticeable on projects with many
   files.
