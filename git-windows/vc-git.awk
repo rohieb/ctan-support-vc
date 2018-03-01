@@ -26,9 +26,11 @@ script=="log" && /^Committer Date:/ { CommitterDate = substr($0, 2+match($0, ":"
 
 ### Process output of "git status".
 ### Changed index?
-script=="status" && /^# Changes to be committed:/ { modified = 1 }
+script=="status" && /^[mMADRCU] / { modified = 1 }
 ### Unstaged modifications?
-script=="status" && /^# Changes not staged for commit:/ { modified = 2 }
+script=="status" && /^ [mMADRCU]/ { modified = 1 }
+### Unresolved merge conflicts?
+script=="status" && /^[mMADRCU][mMADRCU]/ { modified = 1 }
 
 
 
