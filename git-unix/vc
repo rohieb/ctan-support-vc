@@ -3,22 +3,41 @@
 # The original file can be found at CTAN:support/vc.
 # This file is Public Domain.
 
-# Parse command line options.
+# Parse command line options
 full=0
 mod=0
 while [ -n "$(echo $1 | grep '-')" ]; do
-    case $1 in 
-       -f ) full=1 ;;
-       -m ) mod=1 ;;
-       *  ) echo 'usage: vc [-f] [-m]'
-            exit 1
-    esac
-    shift
+	case $1 in
+		-f)	full=1 ;;
+		-m)	mod=1 ;;
+		* )
+			echo 'usage: vc [-f] [-m]'
+			exit 1
+			;;
+	esac
+	shift
 done
-# English locale.
+
+# Query all info from git log
+logformat=""
+logformat="${logformat}Hash: %H%n"
+logformat="${logformat}AbrHash: %h%n"
+logformat="${logformat}ParentHashes: %P%n"
+logformat="${logformat}AbrParentHashes: %p%n"
+logformat="${logformat}AuthorName: %an%n"
+logformat="${logformat}AuthorEmail: %ae%n"
+logformat="${logformat}AuthorDate: %ai%n"
+logformat="${logformat}CommitterName: %cn%n"
+logformat="${logformat}CommitterEmail: %ce%n"
+logformat="${logformat}CommitterDate: %ci%n"
 LC_ALL=C
-git --no-pager log -1 HEAD --pretty=format:"Hash: %H%nAbr. Hash: %h%nParent Hashes: %P%nAbr. Parent Hashes: %p%nAuthor Name: %an%nAuthor Email: %ae%nAuthor Date: %ai%nCommitter Name: %cn%nCommitter Email: %ce%nCommitter Date: %ci%n" |gawk -v script=log -v full=$full -f vc-git.awk > vc.tex
-if [ "$mod" = 1 ]
-then
-  git status --porcelain=v1 |gawk -v script=status -f vc-git.awk >> vc.tex
+git --no-pager log -1 HEAD --pretty=format:"$logformat" \
+	| gawk -v script=log -v full=$full -f vc-git.awk \
+	> vc.tex
+
+# Query modification status of the working copy
+if [ "$mod" = 1 ]; then
+	git status --porcelain=v1 \
+		| gawk -v script=status -f vc-git.awk \
+		>> vc.tex
 fi
