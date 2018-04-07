@@ -15,7 +15,7 @@ based approaches, since it tracks all files in a working
 copy, not only .tex files.
 
 The vc bundle works with LaTeX and plain TeX.  Currently,
-Bazaar, Git and Subversion are supported.
+Bazaar, Git, Mercurial and Subversion are supported.
 
 
 What's special about the vc bundle?
@@ -38,10 +38,14 @@ CTAN:support/vc.
 
 <URL:http://www.ctan.org/get/support/vc.zip>
 
+The source repository can be found on GitHub.
+
+<URL:https://github.com/rohieb/ctan-support-vc>
+
 
 Installation and Usage
 -----------------------------------
-Please see the manual vc-manual.pdf.
+Please see the manual in vc-manual.pdf.
 
 Happy TeXing!
 Stephan Hennig
