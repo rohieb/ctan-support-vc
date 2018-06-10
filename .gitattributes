@@ -1,0 +1,3 @@
+*/vc		text eol=lf
+*/vc.bat	text eol=crlf
+*.pdf		-text
