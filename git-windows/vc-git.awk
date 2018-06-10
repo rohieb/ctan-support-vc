@@ -30,7 +30,7 @@ END {
 	### Process output of "git log"
 	if (script == "log") {
 		### Format dates
-		LongDate = substr(AuthorDate, 1, 25)
+		LongDate = substr(CommitterDate, 1, 25)
 		DateRAW = substr(LongDate, 1, 10)
 		DateISO = DateRAW
 		DateTEX = DateISO
