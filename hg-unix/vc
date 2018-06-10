@@ -6,19 +6,35 @@
 # Parse command line options.
 mod=0
 while [ -n "$(echo $1 | grep '-')" ]; do
-    case $1 in 
-       -m ) mod=1 ;;
-       *  ) echo 'usage: vc [-m]'
-            exit 1
-    esac
-    shift
+	case $1 in 
+		-m )	mod=1 ;;
+		*  )
+			echo 'usage: vc [-m]'
+			exit 1
+			;;
+	esac
+	shift
 done
-# English locale.
+
+logformat=""
+logformat="${logformat}Hash: {node}"
+logformat="${logformat}Abr. Hash: {node|short}"
+logformat="${logformat}Branch: {branch}"
+logformat="${logformat}Parent1 Hash: {p1node}"
+logformat="${logformat}Parent2 Hash: {p2node}"
+logformat="${logformat}Abr. Parent1 Hash: {p1node|short}"
+logformat="${logformat}Abr. Parent2 Hash: {p2node|short}"
+logformat="${logformat}Author Name: {author|user}"
+logformat="${logformat}Author Email: {author|email}"
+logformat="${logformat}Author Date: {date|isodatesec}"
+
 LC_ALL=C
+hg log --pager=off -r . --template "${logformat}" \
+	| gawk -v script=log -f vc-hg.awk \
+	> vc.tex
 
-hg log --pager=off -r . --template "Hash: {node}\nAbr. Hash: {node|short}\nBranch: {branch}\nParent1 Hash: {p1node}\nParent2 Hash: {p2node}\nAbr. Parent1 Hash: {p1node|short}\nAbr. Parent2 Hash: {p2node|short}\nAuthor Name: {author|user}\nAuthor Email: {author|email}\nAuthor Date: {date|isodatesec}" | gawk -v script=log -f vc-hg.awk > vc.tex
-
-if [ "$mod" = 1 ]
-then
-  hg status --pager=off | gawk -v script=status -f vc-hg.awk >> vc.tex
+if [ "$mod" = 1 ]; then
+	hg status --pager=off \
+		| gawk -v script=status -f vc-hg.awk \
+		>> vc.tex
 fi
