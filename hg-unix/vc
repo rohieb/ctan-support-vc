@@ -1,0 +1,24 @@
+#!/bin/sh
+# This is file 'vc' from the vc bundle for TeX.
+# The original file can be found at CTAN:support/vc.
+# This file is Public Domain.
+
+# Parse command line options.
+mod=0
+while [ -n "$(echo $1 | grep '-')" ]; do
+    case $1 in 
+       -m ) mod=1 ;;
+       *  ) echo 'usage: vc [-m]'
+            exit 1
+    esac
+    shift
+done
+# English locale.
+LC_ALL=C
+
+hg log --pager=off -r . --template "Hash: {node}\nAbr. Hash: {node|short}\nBranch: {branch}\nParent1 Hash: {p1node}\nParent2 Hash: {p2node}\nAbr. Parent1 Hash: {p1node|short}\nAbr. Parent2 Hash: {p2node|short}\nAuthor Name: {author|user}\nAuthor Email: {author|email}\nAuthor Date: {date|isodatesec}" | gawk -v script=log -f vc-hg.awk > vc.tex
+
+if [ "$mod" = 1 ]
+then
+  hg status --pager=off | gawk -v script=status -f vc-hg.awk >> vc.tex
+fi
