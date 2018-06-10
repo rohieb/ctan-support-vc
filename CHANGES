@@ -1,3 +1,18 @@
+v0.6 (2018-06-11)
+----------------------
+Changes:
+* Meta:
+  - New maintainer: Roland Hieber <rohieb+ctan@rohieb.name>
+  - Move code to GitHub: https://github.com/rohieb/ctan-support-vc
+* Add support for Mercurial, thanks to ildar nizamov (@niya3 on GitHub)
+* Git: parse the machine-readable output of `git status --porcelain`
+  - fixes the issue that local modifications were not detected in recent Git
+    versions
+* Git: use committer date instead of author date for \VCDate, since author date
+  is not guaranteed to be monotonous
+* Some code cleanup
+
+
 v0.5 (2008-04-21)
 ----------------------
 Incompatible changes:
